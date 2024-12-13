@@ -26,14 +26,14 @@ namespace SBWSFinanceApi.Config
         {
             get
             {
-                BankConfigMst BC = new BankConfigMstLL().ReadAllConfiguration();
-                BankConfig bc = getBankConfigFromDB();
+                //BankConfigMst BC = new BankConfigMstLL().ReadAllConfiguration();
+                //BankConfig bc = getBankConfigFromDB();
 
                 OracleConnectionStringBuilder sb = new OracleConnectionStringBuilder();
                 // Use below 3 for DEV
                 sb.DataSource = "synergic-db2.ckoqkwog5p58.ap-south-1.rds.amazonaws.com:1521/syndb2";
-                //sb.UserID = "ufcsl";
-                //sb.Password = "signature";
+                sb.UserID = "ufcsl";
+                sb.Password = "signature";
 
                 //sb.UserID = "cfstest1";
                 //sb.Password = "signature";
@@ -43,13 +43,13 @@ namespace SBWSFinanceApi.Config
                 //sb.UserID = bc.user1;
                 //sb.Password = bc.pass1;
 
-                string bankName = System.IO.Directory.GetCurrentDirectory();
-                if (bc.bank_name == "UTKALUX")
-                {
-                    sb.DataSource = "synergic-db2.ckoqkwog5p58.ap-south-1.rds.amazonaws.com:1521/syndb2";//"202.65.156.246:1521/orcl";
-                    sb.UserID = "ufcsl";
-                    sb.Password = "signature";
-                }
+                //string bankName = System.IO.Directory.GetCurrentDirectory();
+                //if (bc.bank_name == "UTKALUX")
+                //{
+                //    sb.DataSource = "synergic-db2.ckoqkwog5p58.ap-south-1.rds.amazonaws.com:1521/syndb2";//"202.65.156.246:1521/orcl";
+                //    sb.UserID = "ufcsl";
+                //    sb.Password = "signature";
+                //}
 
 
                 DbConnection connection = null;
@@ -62,7 +62,7 @@ namespace SBWSFinanceApi.Config
                 {
                     connection.Close();
                     throw ex;
-                }  
+                }
 
                 return connection;
             }
@@ -75,7 +75,7 @@ namespace SBWSFinanceApi.Config
             if (null != bankName)
             {
                 // PRD
-                var folderName = bankName.Split('\\').LastOrDefault();                
+                var folderName = bankName.Split('\\').LastOrDefault();
                 DbConnection connection = NewConnectionAdmin;
                 try
                 {
@@ -210,7 +210,7 @@ namespace SBWSFinanceApi.Config
             {
                 // BankConfigMst BC = new BankConfigMstLL().ReadAllConfiguration();
 
-                
+
 
                 // // Use below 3 for PRD deploymen/t
                 // sb.DataSource = BC.connstring.Server; 
@@ -227,7 +227,7 @@ namespace SBWSFinanceApi.Config
                 // // sb.DataSource = "202.65.156.246:1521/orcl";
                 // sb.UserID = "admin_ardb_master";
                 // sb.Password = "signature";
-                
+
                 sb.DataSource = conns.db_server_ip;
                 sb.UserID = conns.user1;
                 sb.Password = conns.pass1;
