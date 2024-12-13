@@ -8238,20 +8238,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ssspl\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SHARED DRIVE\\UTKAL\\SBWSFinanceApi.csproj",
+      "projectUniqueName": "E:\\Chandan\\ARDB_API\\UTKAL\\SBWSFinanceApi.csproj",
       "projectName": "SBWSFinanceApi",
-      "projectPath": "D:\\SHARED DRIVE\\UTKAL\\SBWSFinanceApi.csproj",
-      "packagesPath": "C:\\Users\\ssspl\\.nuget\\packages\\",
-      "outputPath": "D:\\SHARED DRIVE\\UTKAL\\obj\\",
+      "projectPath": "E:\\Chandan\\ARDB_API\\UTKAL\\SBWSFinanceApi.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "E:\\Chandan\\ARDB_API\\UTKAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "D:\\SHARED DRIVE\\UTKAL\\NuGet.Config",
-        "C:\\Users\\ssspl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "E:\\Chandan\\ARDB_API\\UTKAL\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
