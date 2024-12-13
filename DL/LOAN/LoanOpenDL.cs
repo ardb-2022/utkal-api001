@@ -14295,10 +14295,10 @@ namespace SBWSFinanceApi.DL
             List<tm_gold_master_dtls> loanRet = new List<tm_gold_master_dtls>();
             string _query = " SELECT TM_GOLD_MASTER_DTLS.ARDB_CD,TM_GOLD_MASTER_DTLS.BRN_CD,TM_GOLD_MASTER_DTLS.LOAN_ID,TM_GOLD_MASTER_DTLS.VALUATION_NO,TM_GOLD_MASTER_DTLS.SL_NO,TM_GOLD_MASTER_DTLS.DESC_VAL,TM_GOLD_MASTER_DTLS.DESC_NO,TM_GOLD_MASTER_DTLS.GROSS_WE, "
                           + " TM_GOLD_MASTER_DTLS.ALLOY_STONE_WE,TM_GOLD_MASTER_DTLS.NET_WE,TM_GOLD_MASTER_DTLS.PURITY_WE,TM_GOLD_MASTER_DTLS.ACT_WE,TM_GOLD_MASTER_DTLS.SLAB_RANGE,TM_GOLD_MASTER_DTLS.ACT_RATE,TM_GOLD_MASTER_DTLS.NET_VALUE,TM_GOLD_MASTER_DTLS.GOLDSAFE_ID "
-                          + " FROM TM_GOLD_MASTER_DTLS WHERE TM_GOLD_MASTER_DTLS.BRN_CD = {0} AND TM_GOLD_MASTER_DTLS.LOAN_ID = {1} ";
+                          + " FROM TM_GOLD_MASTER_DTLS WHERE TM_GOLD_MASTER_DTLS.LOAN_ID = {0} ";
 
             _statement = string.Format(_query,
-                                           string.Concat("'", pm.brn_cd, "'"),
+                                           //string.Concat("'", pm.brn_cd, "'"),
                                            string.Concat("'", pm.loan_id, "'")
                                            );
             using (var connection = OrclDbConnection.NewConnection)

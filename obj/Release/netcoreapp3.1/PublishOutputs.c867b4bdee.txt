@@ -12,6 +12,8 @@ D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publi
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\nuget.config
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\nuget.config
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\nuget.config
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\nuget.config
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\web.config
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\web.config
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\web.config
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\web.config
@@ -89,6 +91,16 @@ D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publi
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\Constant\BankConfig.json
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\Constant\BranchConfig.json
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\package-lock.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\appsettings.Development.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\appsettings.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\Constant\BankConfig.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\Constant\BranchConfig.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\package-lock.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\RPT\Constant\appsettings.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\RPT\Constant\BankConfig.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\RPT\Constant\BranchConfig.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\SBWSFinanceApi.deps.json
+D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\SBWSFinanceApi.runtimeconfig.json
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\RPT\Constant\appsettings.json
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\RPT\Constant\BankConfig.json
 D:\SHARED DRIVE\UTKAL\obj\Release\netcoreapp3.1\PubTmp\Out\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\publish\RPT\Constant\BranchConfig.json
