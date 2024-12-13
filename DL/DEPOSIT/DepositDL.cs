@@ -5600,7 +5600,7 @@ namespace SBWSDepositApi.Deposit
 
 
 
-      /*  internal int InsertAgentMaster(mm_agent_master prp)
+        internal int InsertAgentMaster(mm_agent_master prp)
         {
 
             int _ret = 0;
@@ -5656,7 +5656,7 @@ namespace SBWSDepositApi.Deposit
             }
             return _ret;
 
-        }  */
+        }  
 
 
 
