@@ -10,8 +10,7 @@ using SBWSDepositApi.Models;
 using SBWSDepositApi.Deposit;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
-
-
+using System.Linq;
 
 namespace SBWSFinanceApi.DL
 {
@@ -13946,9 +13945,9 @@ namespace SBWSFinanceApi.DL
             }
             catch (Exception ex)
             {
-                // Log the error (assuming a logging mechanism is available)
+                
                 Console.WriteLine($"Error in GetGoldLoanDetails: {ex.Message}");
-                throw; // Re-throw to allow higher layers to handle
+                throw; 
             }
         }
 
@@ -13990,7 +13989,7 @@ namespace SBWSFinanceApi.DL
             return LoanSecurityList;
         }
 
-
+      //  internal int InsertLoanSecurityData(List<td_loan_security> prpList)
         internal int InsertLoanSecurityData(td_loan_security prp)
         {
             int _ret = 0;
@@ -14113,6 +14112,7 @@ namespace SBWSFinanceApi.DL
 
             return _ret;
         }
+
 
         internal td_loan_security GetLoanSecurityData(string loan_id)
         {
@@ -14476,6 +14476,359 @@ namespace SBWSFinanceApi.DL
             return _ret;
 
         }
+
+
+        internal int InsertLoanLetterCharge(loan_letter_charge_master prp)
+        {
+            int _ret = 0;
+
+            string _query = @"
+        INSERT INTO TM_LOAN_LETTER_CHARG_MASTER (
+            BRN_CD,
+            LOAN_ID,
+            LETTER_TYPE,
+            LETTER_COUNT,
+            LETTER_AMOUNT,
+            SEND_DATE,
+            CREATED_BY,
+            CREATED_DT
+        ) VALUES (
+            :BRN_CD, 
+            :LOAN_ID, 
+            :LETTER_TYPE,
+            :LETTER_COUNT,
+            :LETTER_AMOUNT,
+            :SEND_DATE,
+            :CREATED_BY,
+            :CREATED_DT
+        )";
+
+            using (var connection = OrclDbConnection.NewConnection)
+            {
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        using (var command = OrclDbConnection.Command(connection, _query))
+                        {
+                           
+                            command.Parameters.Add(new OracleParameter("BRN_CD", prp.brn_cd));
+                            command.Parameters.Add(new OracleParameter("LOAN_ID", prp.loan_id));
+                            command.Parameters.Add(new OracleParameter("LETTER_TYPE", prp.letter_type));
+                            command.Parameters.Add(new OracleParameter("LETTER_COUNT", prp.letter_count));
+                            command.Parameters.Add(new OracleParameter("LETTER_AMOUNT", prp.letter_amount));
+                            command.Parameters.Add(new OracleParameter("SEND_DATE", prp.send_date));
+                            command.Parameters.Add(new OracleParameter("CREATED_BY", prp.created_by));
+                            command.Parameters.Add(new OracleParameter("CREATED_DT", prp.created_dt));
+
+                           
+                            command.ExecuteNonQuery();
+                            transaction.Commit();
+                            _ret = 1; 
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        _ret = -1;  
+                                   
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                }
+            }
+
+            return _ret;
+        }
+
+        internal loan_letter_charge_master GetLoanLetterCharge(string loan_id)
+        {
+            loan_letter_charge_master loanletterchargemaster = null;
+
+            string _query = @"
+            SELECT  BRN_CD,
+                    LOAN_ID,
+                    LETTER_TYPE,
+                    LETTER_COUNT,
+                    LETTER_AMOUNT,
+                    SEND_DATE,
+                    CREATED_BY,
+                    CREATED_DT
+            FROM TM_LOAN_LETTER_CHARG_MASTER
+            WHERE LOAN_ID = '{0}'";
+
+            using (var connection = OrclDbConnection.NewConnection)
+            {
+                try
+                {
+                    string _statement = string.Format(_query, loan_id);
+
+                    using (var command = OrclDbConnection.Command(connection, _statement))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            loanletterchargemaster = new loan_letter_charge_master
+                            {
+                                //brn_cd = reader["BRN_CD"].ToString(),
+                                brn_cd = Convert.ToString(reader["BRN_CD"]),
+                                loan_id = reader["LOAN_ID"].ToString(),
+                                letter_type = reader["LETTER_TYPE"].ToString(),
+                                letter_count = Convert.ToInt32(reader["LETTER_COUNT"]),
+                                letter_amount = reader["LETTER_AMOUNT"] != DBNull.Value ? Convert.ToDecimal(reader["LETTER_AMOUNT"]) : 0,
+                                send_date = reader["SEND_DATE"] != DBNull.Value ? Convert.ToDateTime(reader["SEND_DATE"]) : DateTime.MinValue, 
+                                created_by = reader["CREATED_BY"].ToString(),
+                                created_dt = reader["CREATED_DT"] != DBNull.Value ? Convert.ToDateTime(reader["CREATED_DT"]) : DateTime.MinValue,
+                            };
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    loanletterchargemaster = null;
+                }
+            }
+
+            return loanletterchargemaster;
+        }
+
+        internal int InsertLoanSecurityDataList(List<td_loan_security> prpList)
+        {
+            int _ret = 0;
+
+            string _query = @"
+        INSERT INTO TD_LOAN_SECURITY (
+            LOAN_ID, ACC_CD, SEC_TYPE, SL_NO, ACC_TYPE_CD, ACC_NUM, OPN_DT, MAT_DT, PRN_AMT, MAT_VAL, CURR_BAL, 
+            CERT_TYPE, CERT_NAME, CERT_NO, REGN_NO, POST_OFF, CERT_OPN_DT, CERT_MAT_DT, CERT_PDLG_DT, CERT_PLG_NO, 
+            PURCHASE_VALUE, SUM_ASSURED, POL_TYPE, POL_NAME, POL_NO, POL_OPN_DT, POL_MAT_DT, POL_SUR_VAL, 
+            POL_BRN_NAME, POL_ASSGN_NO, POL_ASSGN_DT, POL_MONEY_BK, POL_SUM_ASSURED, PROP_TYPE, PROP_ADDR, 
+            TOTAL_LAND_AREA, TOT_CV_AREA, DEED_NO, DISTCT, PS, MOUZA, JL_NO, RS_KHA, LR_KHA, RS_DAG, LR_DAG, 
+            DEED_MUNI, WARD_NO, HOLDING_NO, BOUNDRY, CNST_YR, FLOOR_AREA, MKT_VAL, TAX_UPTO, BL_RO_TAX, 
+            MORT_DEED_REG_NO, MORT_DEED_DT, GOLD_GROSS_WT, GOLD_NET_WT, KARAT, GOLD_DESC, GOLD_QTY, GOLD_VAL, 
+            STOCK_TYPE, STOCK_VALUE, FINAL_VALUE, CREATED_BY, CREATED_DT, MODIFIED_BY, MODIFIED_DT
+        ) VALUES (
+            :loan_id, :acc_cd, :sec_type, :sl_no, :acc_type_cd, :acc_num, TO_DATE(:opn_dt, 'dd-MM-yyyy'), TO_DATE(:mat_dt, 'dd-MM-yyyy'), 
+            :prn_amt, :mat_val, :curr_bal, :cert_type, :cert_name, :cert_no, :regn_no, :post_off, TO_DATE(:cert_opn_dt, 'dd-MM-yyyy'), 
+            TO_DATE(:cert_mat_dt, 'dd-MM-yyyy'), TO_DATE(:cert_pdlg_dt, 'dd-MM-yyyy'), :cert_plg_no, :purchase_value, :sum_assured, 
+            :pol_type, :pol_name, :pol_no, TO_DATE(:pol_opn_dt, 'dd-MM-yyyy'), TO_DATE(:pol_mat_dt, 'dd-MM-yyyy'), :pol_sur_val, 
+            :pol_brn_name, :pol_assgn_no, TO_DATE(:pol_assgn_dt, 'dd-MM-yyyy'), :pol_money_bk, :pol_sum_assured, :prop_type, :prop_addr, 
+            :total_land_area, :tot_cv_area, :deed_no, :distct, :ps, :mouza, :jl_no, :rs_kha, :lr_kha, :rs_dag, :lr_dag, :deed_muni, 
+            :ward_no, :holding_no, :boundry, :cnst_yr, :floor_area, :mkt_val, TO_DATE(:tax_upto, 'dd-MM-yyyy'), :bl_ro_tax, :mort_deed_reg_no, 
+            TO_DATE(:mort_deed_dt, 'dd-MM-yyyy'), :gold_gross_wt, :gold_net_wt, :karat, :gold_desc, :gold_qty, :gold_val, :stock_type, 
+            :stock_value, :final_value, :created_by, TO_DATE(:created_dt, 'dd-MM-yyyy'), :modified_by, TO_DATE(:modified_dt, 'dd-MM-yyyy')
+        )";
+
+            using (var connection = OrclDbConnection.NewConnection)
+            {
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        for (int i = 0; i < prpList.Count; i++)
+                        {
+                            var prp = prpList[i];
+
+                            using (var command = OrclDbConnection.Command(connection, _query))
+                            {
+                                command.Parameters.Add(new OracleParameter("loan_id", prp.loan_id));
+                                command.Parameters.Add(new OracleParameter("acc_cd", prp.acc_cd));
+                                command.Parameters.Add(new OracleParameter("sec_type", prp.sec_type));
+                                command.Parameters.Add(new OracleParameter("sl_no", prp.sl_no));
+                                command.Parameters.Add(new OracleParameter("acc_type_cd", prp.acc_type_cd));
+                                command.Parameters.Add(new OracleParameter("acc_num", prp.acc_num));
+                                command.Parameters.Add(new OracleParameter("opn_dt", prp.opn_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("mat_dt", prp.mat_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("prn_amt", prp.prn_amt));
+                                command.Parameters.Add(new OracleParameter("mat_val", prp.mat_val));
+                                command.Parameters.Add(new OracleParameter("curr_bal", prp.curr_bal));
+                                command.Parameters.Add(new OracleParameter("cert_type", prp.cert_type));
+                                command.Parameters.Add(new OracleParameter("cert_name", prp.cert_name));
+                                command.Parameters.Add(new OracleParameter("cert_no", prp.cert_no));
+                                command.Parameters.Add(new OracleParameter("regn_no", prp.regn_no));
+                                command.Parameters.Add(new OracleParameter("post_off", prp.post_off));
+                                command.Parameters.Add(new OracleParameter("cert_opn_dt", prp.cert_opn_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("cert_mat_dt", prp.cert_mat_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("cert_pdlg_dt", prp.cert_pdlg_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("cert_plg_no", prp.cert_plg_no));
+                                command.Parameters.Add(new OracleParameter("purchase_value", prp.purchase_value));
+                                command.Parameters.Add(new OracleParameter("sum_assured", prp.sum_assured));
+                                command.Parameters.Add(new OracleParameter("pol_type", prp.pol_type));
+                                command.Parameters.Add(new OracleParameter("pol_name", prp.pol_name));
+                                command.Parameters.Add(new OracleParameter("pol_no", prp.pol_no));
+                                command.Parameters.Add(new OracleParameter("pol_opn_dt", prp.pol_opn_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("pol_mat_dt", prp.pol_mat_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("pol_sur_val", prp.pol_sur_val));
+                                command.Parameters.Add(new OracleParameter("pol_brn_name", prp.pol_brn_name));
+                                command.Parameters.Add(new OracleParameter("pol_assgn_no", prp.pol_assgn_no));
+                                command.Parameters.Add(new OracleParameter("pol_assgn_dt", prp.pol_assgn_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("pol_money_bk", prp.pol_money_bk));
+                                command.Parameters.Add(new OracleParameter("pol_sum_assured", prp.pol_sum_assured));
+                                command.Parameters.Add(new OracleParameter("prop_type", prp.prop_type));
+                                command.Parameters.Add(new OracleParameter("prop_addr", prp.prop_addr));
+                                command.Parameters.Add(new OracleParameter("total_land_area", prp.total_land_area));
+                                command.Parameters.Add(new OracleParameter("tot_cv_area", prp.tot_cv_area));
+                                command.Parameters.Add(new OracleParameter("deed_no", prp.deed_no));
+                                command.Parameters.Add(new OracleParameter("distct", prp.distct));
+                                command.Parameters.Add(new OracleParameter("ps", prp.ps));
+                                command.Parameters.Add(new OracleParameter("mouza", prp.mouza));
+                                command.Parameters.Add(new OracleParameter("jl_no", prp.jl_no));
+                                command.Parameters.Add(new OracleParameter("rs_kha", prp.rs_kha));
+                                command.Parameters.Add(new OracleParameter("lr_kha", prp.lr_kha));
+                                command.Parameters.Add(new OracleParameter("rs_dag", prp.rs_dag));
+                                command.Parameters.Add(new OracleParameter("lr_dag", prp.lr_dag));
+                                command.Parameters.Add(new OracleParameter("deed_muni", prp.deed_muni));
+                                command.Parameters.Add(new OracleParameter("ward_no", prp.ward_no));
+                                command.Parameters.Add(new OracleParameter("holding_no", prp.holding_no));
+                                command.Parameters.Add(new OracleParameter("boundry", prp.boundry));
+                                command.Parameters.Add(new OracleParameter("cnst_yr", prp.cnst_yr));
+                                command.Parameters.Add(new OracleParameter("floor_area", prp.floor_area));
+                                command.Parameters.Add(new OracleParameter("mkt_val", prp.mkt_val));
+                                command.Parameters.Add(new OracleParameter("tax_upto", prp.tax_upto.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("bl_ro_tax", prp.bl_ro_tax));
+                                command.Parameters.Add(new OracleParameter("mort_deed_reg_no", prp.mort_deed_reg_no));
+                                command.Parameters.Add(new OracleParameter("mort_deed_dt", prp.mort_deed_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("gold_gross_wt", prp.gold_gross_wt));
+                                command.Parameters.Add(new OracleParameter("gold_net_wt", prp.gold_net_wt));
+                                command.Parameters.Add(new OracleParameter("karat", prp.karat));
+                                command.Parameters.Add(new OracleParameter("gold_desc", prp.gold_desc));
+                                command.Parameters.Add(new OracleParameter("gold_qty", prp.gold_qty));
+                                command.Parameters.Add(new OracleParameter("gold_val", prp.gold_val));
+                                command.Parameters.Add(new OracleParameter("stock_type", prp.stock_type));
+                                command.Parameters.Add(new OracleParameter("stock_value", prp.stock_value));
+                                command.Parameters.Add(new OracleParameter("final_value", prp.final_value));
+                                command.Parameters.Add(new OracleParameter("created_by", prp.created_by));
+                                command.Parameters.Add(new OracleParameter("created_dt", prp.created_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("modified_by", prp.modified_by));
+                                command.Parameters.Add(new OracleParameter("modified_dt", prp.modified_dt.ToString("dd-MM-yyyy")));
+
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                        _ret = 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        _ret = -1;
+                    }
+                }
+            }
+
+            return _ret;
+        }
+
+
+        public int UpdateLoanSecurityDataList(List<td_loan_security> dep)
+        {
+            int _ret = 0;
+
+            string deleteQuery = @"
+        DELETE FROM TD_LOAN_SECURITY 
+        WHERE LOAN_ID IN ({0})";
+
+            string insertQuery = @"
+        INSERT INTO TD_LOAN_SECURITY (
+            LOAN_ID, ACC_CD, SEC_TYPE, SL_NO, ACC_TYPE_CD, ACC_NUM, OPN_DT, MAT_DT, PRN_AMT, MAT_VAL, CURR_BAL, 
+            CERT_TYPE, CERT_NAME, CERT_NO, REGN_NO, POST_OFF, CERT_OPN_DT, CERT_MAT_DT, CERT_PDLG_DT, CERT_PLG_NO, 
+            PURCHASE_VALUE, SUM_ASSURED, POL_TYPE, POL_NAME, POL_NO, POL_OPN_DT, POL_MAT_DT, POL_SUR_VAL, 
+            CREATED_BY, CREATED_DT, MODIFIED_BY, MODIFIED_DT
+        ) VALUES (
+            :loan_id, :acc_cd, :sec_type, :sl_no, :acc_type_cd, :acc_num, TO_DATE(:opn_dt, 'dd-MM-yyyy'), TO_DATE(:mat_dt, 'dd-MM-yyyy'), 
+            :prn_amt, :mat_val, :curr_bal, :cert_type, :cert_name, :cert_no, :regn_no, :post_off, 
+            TO_DATE(:cert_opn_dt, 'dd-MM-yyyy'), TO_DATE(:cert_mat_dt, 'dd-MM-yyyy'), TO_DATE(:cert_pdlg_dt, 'dd-MM-yyyy'), :cert_plg_no, 
+            :purchase_value, :sum_assured, :pol_type, :pol_name, :pol_no, TO_DATE(:pol_opn_dt, 'dd-MM-yyyy'), 
+            TO_DATE(:pol_mat_dt, 'dd-MM-yyyy'), :pol_sur_val, :created_by, TO_DATE(:created_dt, 'dd-MM-yyyy'), 
+            :modified_by, TO_DATE(:modified_dt, 'dd-MM-yyyy')
+        )";
+
+            using (var connection = OrclDbConnection.NewConnection)
+            {
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Step 1: Delete records based on LOAN_IDs in the list
+                        string loanIdList = "";
+                        for (int i = 0; i < dep.Count; i++)
+                        {
+                            if (!loanIdList.Contains($"'{dep[i].loan_id}'"))
+                            {
+                                if (loanIdList.Length > 0)
+                                {
+                                    loanIdList += ",";
+                                }
+                                loanIdList += $"'{dep[i].loan_id}'";
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(loanIdList))
+                        {
+                            string deleteStatement = string.Format(deleteQuery, loanIdList);
+                            using (var deleteCommand = OrclDbConnection.Command(connection, deleteStatement))
+                            {
+                                deleteCommand.ExecuteNonQuery();
+                            }
+                        }
+
+                        // Step 2: Insert new records
+                        for (int i = 0; i < dep.Count; i++)
+                        {
+                            using (var command = OrclDbConnection.Command(connection, insertQuery))
+                            {
+                                command.Parameters.Add(new OracleParameter("loan_id", dep[i].loan_id));
+                                command.Parameters.Add(new OracleParameter("acc_cd", dep[i].acc_cd));
+                                command.Parameters.Add(new OracleParameter("sec_type", dep[i].sec_type));
+                                command.Parameters.Add(new OracleParameter("sl_no", dep[i].sl_no));
+                                command.Parameters.Add(new OracleParameter("acc_type_cd", dep[i].acc_type_cd));
+                                command.Parameters.Add(new OracleParameter("acc_num", dep[i].acc_num));
+                                command.Parameters.Add(new OracleParameter("opn_dt", dep[i].opn_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("mat_dt", dep[i].mat_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("prn_amt", dep[i].prn_amt));
+                                command.Parameters.Add(new OracleParameter("mat_val", dep[i].mat_val));
+                                command.Parameters.Add(new OracleParameter("curr_bal", dep[i].curr_bal));
+                                command.Parameters.Add(new OracleParameter("cert_type", dep[i].cert_type));
+                                command.Parameters.Add(new OracleParameter("cert_name", dep[i].cert_name));
+                                command.Parameters.Add(new OracleParameter("cert_no", dep[i].cert_no));
+                                command.Parameters.Add(new OracleParameter("regn_no", dep[i].regn_no));
+                                command.Parameters.Add(new OracleParameter("post_off", dep[i].post_off));
+                                command.Parameters.Add(new OracleParameter("cert_opn_dt", dep[i].cert_opn_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("cert_mat_dt", dep[i].cert_mat_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("cert_pdlg_dt", dep[i].cert_pdlg_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("cert_plg_no", dep[i].cert_plg_no));
+                                command.Parameters.Add(new OracleParameter("purchase_value", dep[i].purchase_value));
+                                command.Parameters.Add(new OracleParameter("sum_assured", dep[i].sum_assured));
+                                command.Parameters.Add(new OracleParameter("pol_type", dep[i].pol_type));
+                                command.Parameters.Add(new OracleParameter("pol_name", dep[i].pol_name));
+                                command.Parameters.Add(new OracleParameter("pol_no", dep[i].pol_no));
+                                command.Parameters.Add(new OracleParameter("pol_opn_dt", dep[i].pol_opn_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("pol_mat_dt", dep[i].pol_mat_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("pol_sur_val", dep[i].pol_sur_val));
+                                command.Parameters.Add(new OracleParameter("created_by", dep[i].created_by));
+                                command.Parameters.Add(new OracleParameter("created_dt", dep[i].created_dt.ToString("dd-MM-yyyy")));
+                                command.Parameters.Add(new OracleParameter("modified_by", dep[i].modified_by));
+                                command.Parameters.Add(new OracleParameter("modified_dt", dep[i].modified_dt.ToString("dd-MM-yyyy")));
+
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        // Commit the transaction if everything succeeds
+                        transaction.Commit();
+                        _ret = 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Rollback the transaction in case of an error
+                        transaction.Rollback();
+                        _ret = -1;
+                    }
+                }
+            }
+
+            return _ret;
+        }
+
 
 
     }

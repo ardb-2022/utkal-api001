@@ -26,14 +26,14 @@ namespace SBWSFinanceApi.Config
         {
             get
             {
-                //BankConfigMst BC = new BankConfigMstLL().ReadAllConfiguration();
-                //BankConfig bc = getBankConfigFromDB();
+                BankConfigMst BC = new BankConfigMstLL().ReadAllConfiguration();
+                BankConfig bc = getBankConfigFromDB();
 
                 OracleConnectionStringBuilder sb = new OracleConnectionStringBuilder();
                 // Use below 3 for DEV
                 sb.DataSource = "synergic-db2.ckoqkwog5p58.ap-south-1.rds.amazonaws.com:1521/syndb2";
-                sb.UserID = "ufcsl";
-                sb.Password = "signature";
+                //sb.UserID = "ufcsl";
+                //sb.Password = "signature";
 
                 //sb.UserID = "cfstest1";
                 //sb.Password = "signature";
@@ -43,13 +43,13 @@ namespace SBWSFinanceApi.Config
                 //sb.UserID = bc.user1;
                 //sb.Password = bc.pass1;
 
-                //string bankName = System.IO.Directory.GetCurrentDirectory();
-                //if (bc.bank_name == "UTKALUX")
-                //{
-                //    sb.DataSource = "synergic-db2.ckoqkwog5p58.ap-south-1.rds.amazonaws.com:1521/syndb2";//"202.65.156.246:1521/orcl";
-                //    sb.UserID = "ufcsl";
-                //    sb.Password = "signature";
-                //}
+                string bankName = System.IO.Directory.GetCurrentDirectory();
+                if (bc.bank_name == "UTKALUX")
+                {
+                    sb.DataSource = "synergic-db2.ckoqkwog5p58.ap-south-1.rds.amazonaws.com:1521/syndb2";//"202.65.156.246:1521/orcl";
+                    sb.UserID = "ufcsl";
+                    sb.Password = "signature";
+                }
 
 
                 DbConnection connection = null;

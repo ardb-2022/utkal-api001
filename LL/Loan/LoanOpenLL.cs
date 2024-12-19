@@ -614,6 +614,15 @@ namespace SBWSFinanceApi.LL
             return _dac.InsertLoanSecurityData(prp);
         }
 
+        internal int InsertLoanSecurityDataList(List<td_loan_security> prp)
+        {
+            return _dac.InsertLoanSecurityDataList(prp);
+        }
+
+        internal int UpdateLoanSecurityDataList(List<td_loan_security> prp)
+        {
+            return _dac.UpdateLoanSecurityDataList(prp);
+        }
         internal td_loan_security GetLoanSecurityData(string loan_id)
         {
             return _dac.GetLoanSecurityData(loan_id);
@@ -638,5 +647,14 @@ namespace SBWSFinanceApi.LL
             return _dac.UpdateGoldMasterDtls(prp);
         }
 
+        internal int InsertLoanLetterCharge(loan_letter_charge_master prp)
+        {
+            return _dac.InsertLoanLetterCharge(prp);
+        }
+
+        internal loan_letter_charge_master GetLoanLetterCharge(string loan_id)
+        {
+            return _dac.GetLoanLetterCharge(loan_id);
+        }
     }
 }

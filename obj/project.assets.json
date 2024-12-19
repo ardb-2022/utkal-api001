@@ -8243,14 +8243,14 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SHARED DRIVE\\UTKAL\\SBWSFinanceApi.csproj",
+      "projectUniqueName": "D:\\SHARED DRIVE\\UTKAL NEW\\SBWSFinanceApi.csproj",
       "projectName": "SBWSFinanceApi",
-      "projectPath": "D:\\SHARED DRIVE\\UTKAL\\SBWSFinanceApi.csproj",
+      "projectPath": "D:\\SHARED DRIVE\\UTKAL NEW\\SBWSFinanceApi.csproj",
       "packagesPath": "C:\\Users\\ssspl\\.nuget\\packages\\",
-      "outputPath": "D:\\SHARED DRIVE\\UTKAL\\obj\\",
+      "outputPath": "D:\\SHARED DRIVE\\UTKAL NEW\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "D:\\SHARED DRIVE\\UTKAL\\NuGet.Config",
+        "D:\\SHARED DRIVE\\UTKAL NEW\\NuGet.Config",
         "C:\\Users\\ssspl\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

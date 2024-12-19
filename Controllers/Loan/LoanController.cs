@@ -893,6 +893,13 @@ namespace SBWSFinanceApi.Controllers
             return _ll.InsertLoanSecurityData(dep);
         }
 
+        [Route("InsertLoanSecurityDataList")]
+        [HttpPost]
+        public int InsertLoanSecurityDataList([FromBody] List<td_loan_security> dep)
+        {
+            return _ll.InsertLoanSecurityDataList(dep);
+        }
+
         [Route("GetLoanSecurityData")]
         [HttpPost]
         public td_loan_security GetLoanSecurityData(string loan_id)
@@ -905,6 +912,13 @@ namespace SBWSFinanceApi.Controllers
         public int UpdateLoanSecurityData(td_loan_security dep)
         {
             return _ll.UpdateLoanSecurityData(dep);
+        }
+
+        [Route("UpdateLoanSecurityDataList")]
+        [HttpPost]
+        public int UpdateLoanSecurityDataList([FromBody] List<td_loan_security> dep)
+        {
+            return _ll.UpdateLoanSecurityDataList(dep);
         }
 
         [Route("GetGoldMasterDtls")]
@@ -927,5 +941,20 @@ namespace SBWSFinanceApi.Controllers
         {
             return _ll.UpdateGoldMasterDtls(prp);
         }
+
+        [Route("InsertLoanLetterCharge")]
+        [HttpPost]
+        public int InsertLoanLetterCharge(loan_letter_charge_master prp)
+        {
+            return _ll.InsertLoanLetterCharge(prp);
+        }
+
+        [Route("GetLoanLetterCharge")]
+        [HttpPost]
+        public loan_letter_charge_master GetLoanLetterCharge(string loan_id)
+        {
+            return _ll.GetLoanLetterCharge(loan_id);
+        }
+
     }
 }
